@@ -11,13 +11,12 @@ type Props = {
     approved: Leave[];
     rejected: Leave[];
   };
-  totalUsers: number;
   pendingCount: number;
   approvedCount: number;
   rejectedCount: number;
 };
 
-const UserBalances = ({ user, leaves={ pending: [], approved: [], rejected: [] }, totalUsers, pendingCount, approvedCount, rejectedCount }: Props) => {
+const UserBalances = ({ user, leaves={ pending: [], approved: [], rejected: [] }, pendingCount, approvedCount, rejectedCount }: Props) => {
   const renderLeaveDetails = (leaveList: Leave[]) => {
     // if (leaveList.length === 0) return "No leave records";
 
@@ -36,12 +35,7 @@ const UserBalances = ({ user, leaves={ pending: [], approved: [], rejected: [] }
   };
   return (
     <Container>
-      <section className="grid grid-cols-1 gap-4 my-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <LeaveCard
-          title="Employees"
-          subtitle="Total Users"
-          count={totalUsers}
-        />
+      <section className="grid grid-cols-1 gap-4 my-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
         <LeaveCard
            title="Pending Leave(s)"
            subtitle="Total Leaves Pending"

@@ -20,7 +20,7 @@ export default async function calculateAndUpdateBalances(
   let balanceUpdate: Partial<Balances> = {};
 
   switch (type) {
-    case "ANNUAL":
+    case "Annual":
       balanceUpdate = {
         annualUsed: (balance.annualUsed as number) + days,
         annualAvailable:
@@ -28,7 +28,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.annualUsed as number) + days),
       };
       break;
-    case "CASUAL":
+    case "Casual":
       balanceUpdate = {
         casualUsed: (balance.casualUsed as number) + days,
         casualAvailable:
@@ -36,7 +36,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.casualUsed as number) + days),
       };
       break;
-    case "SICK":
+    case "Sick":
       balanceUpdate = {
         sickUsed: (balance.sickUsed as number) + days,
         sickAvailable:
@@ -44,7 +44,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.sickUsed as number) + days),
       };
       break;
-    case "MATERNITY":
+    case "Maternity":
       balanceUpdate = {
         maternityUsed: (balance.maternityUsed as number) + days,
         maternityAvailable:
@@ -52,7 +52,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.maternityUsed as number) + days),
       };
       break;
-    case "PATERNITY":
+    case "paternity":
       balanceUpdate = {
         paternityUsed: (balance.paternityUsed as number) + days,
         paternityAvailable:
@@ -60,7 +60,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.paternityUsed as number) + days),
       };
       break;
-    case "STUDY":
+    case "Study":
       balanceUpdate = {
         studyUsed: (balance.studyUsed as number) + days,
         studyAvailable:
@@ -68,7 +68,7 @@ export default async function calculateAndUpdateBalances(
           ((balance.studyUsed as number) + days),
       };
       break;
-    case "UNPAID":
+    case "unpaid":
       balanceUpdate = {
         unpaidUsed: (balance.unpaidUsed as number) + days,
       };

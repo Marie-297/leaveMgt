@@ -18,18 +18,6 @@ import {
 } from "@/components/ui/form";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import { format } from "date-fns";
-// import {
-//   Command,
-//   CommandEmpty,
-//   CommandGroup,
-//   CommandInput,
-//   CommandItem,
-// } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { leaveTypes } from "@/lib/data/dummy-data";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
@@ -115,7 +103,7 @@ const RequestForm = ({ user }: Props) => {
             name="leave"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Leave Type</FormLabel>
+                <DropdownMenuLabel>Leave Type</DropdownMenuLabel>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -129,15 +117,16 @@ const RequestForm = ({ user }: Props) => {
                       {field.value
                         ? leaveTypes.find((leave) => leave.value === field.value)?.label
                         : "Select a leave"}
-                      <PiCaretUpDownBold className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      <PiCaretUpDownBold className="ml-2 h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent className="w-[200px] bg-white/90 backdrop-blur-md border border-transparent shadow-lg rounded-lg p-2 transition-all duration-300">
                     {leaveTypes.map((leave) => (
                       <DropdownMenuItem
-                        key={leave.value}
-                        onSelect={() => form.setValue("leave", leave.value)}
+                        key={leave.label}
+                        onSelect={() => form.setValue("leave", leave.label)}
+                        className="flex justify-between mb-2"
                       >
                         <BsCheckLg
                           className={cn(
@@ -161,8 +150,8 @@ const RequestForm = ({ user }: Props) => {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Start Date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
@@ -176,23 +165,22 @@ const RequestForm = ({ user }: Props) => {
                         ) : (
                           <span>Pick a date</span>
                         )}
-                        <IoCalendarOutline className=" h-4 w-4 opacity-50" />
+                        <IoCalendarOutline className=" h-4 w-4" />
                       </Button>
                     </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-auto p-0 bg-white z-10 border-solid border-[1px]" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      // This function in disabled is to make sure we get to set the leave to be of this year only based on this year start date
                       disabled={(date: Date) =>{  const today = new Date();
                         const currentYear = today.getFullYear();
                         return date < today || date.getFullYear() > currentYear;}}
                       initialFocus
                     />
-                  </PopoverContent>
-                </Popover>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <FormMessage />
               </FormItem>
             )}
@@ -204,8 +192,8 @@ const RequestForm = ({ user }: Props) => {
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>End Date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
                     <FormControl>
                       <Button
                         variant={"outline"}
@@ -222,8 +210,8 @@ const RequestForm = ({ user }: Props) => {
                         <IoCalendarOutline className=" h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-auto p-0 bg-white z-10 border-solid border-[1px]" align="start">
                     <Calendar
                       mode="single"
                       selected={field.value}
@@ -231,8 +219,8 @@ const RequestForm = ({ user }: Props) => {
                       disabled={(date: Date) => date < new Date()}
                       initialFocus
                     />
-                  </PopoverContent>
-                </Popover>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <FormMessage />
               </FormItem>
             )}

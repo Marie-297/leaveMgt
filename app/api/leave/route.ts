@@ -1,7 +1,6 @@
 import { getCurrentUser } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
-import { differenceInDays, parseISO, isBefore } from "date-fns";
-import prisma from "@/lib/prisma";
+import { differenceInDays, parseISO } from "date-fns";
 
 type SubmittedLeave = {
   notes: string;
@@ -29,9 +28,6 @@ export async function POST(req: NextRequest) {
 
     const startDateObj = parseISO(startDate);
     const endDateObj = parseISO(endDate)
-    if (!isBefore(startDateObj, endDateObj)) {
-      return NextResponse.json({ error: "Start date must be before end date" }, { status: 400 });
-    }
     const calcDays = differenceInDays(endDateObj, startDateObj) + 1;
 
     const existingLeave = await prisma.leave.findFirst({

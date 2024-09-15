@@ -30,11 +30,10 @@ const Dashboard = async () => {
           <div>
             <Container>
               <h2 className="text-xl text-center font-extrabold leading-9  lg:text-2xl mt-4">
-                Analyses...
+                Leave Types Analytics...
               </h2>
             </Container>
             <UserBalances user={user as User}
-            totalUsers={totalUsers < 1 ? 0 : totalUsers}
             pendingCount={pendingCount < 1 ? 0 : pendingCount}
             approvedCount={approvedCount < 1 ? 0 : approvedCount}rejectedCount={rejectedCount < 1 ? 0 : rejectedCount}
             leaves={leaveData}  />

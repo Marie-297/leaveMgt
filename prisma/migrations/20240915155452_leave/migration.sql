@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Leave" ALTER COLUMN "type" DROP DEFAULT;

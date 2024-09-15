@@ -10,7 +10,7 @@ export default async function AdminUsersPage ()  {
  
   return (
     <Container>
-      <h2 className="text-6xl py-4 font-cormorant font-bold tracking-tight">Users</h2>
+      <h2 className="text-6xl py-4 font-cormorant font-bold tracking-tight">Employees Profile</h2>
       <TableWrapper title='Admin Users'>
         <UsersTable users={users} />
       </TableWrapper>

@@ -16,20 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
 import { PiCaretUpDownBold } from "react-icons/pi";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { BsCheckLg } from "react-icons/bs";
 import { leaveStatus } from "@/lib/data/dummy-data";
 import { cn } from "@/lib/utils";
@@ -68,6 +56,7 @@ const EditLeave = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       notes: "",
+      status: leaveStatus[0],
     },
   });
 
@@ -75,8 +64,8 @@ const EditLeave = ({
     try {
       const formValues = {
         ...values,
-        notes: values.notes,
-        status: values.status,
+        // notes: values.notes,
+        // status: values.status,
         id,
         days,
         type,
@@ -85,9 +74,13 @@ const EditLeave = ({
         user,
         startDate,
       };
-      const leaveId = "leaveId";
-      const res = await fetch(`/api/leave/${leaveId}`, {
+      console.log("Form Values:", formValues);
+      
+      const res = await fetch(`/api/leave/${id}`, {
         method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formValues),
       });
 
@@ -141,7 +134,6 @@ const EditLeave = ({
                   <DropdownMenuContent className="w-[200px] p-0">
                     {leaveStatus.map((status, i) => (
                       <DropdownMenuItem
-                        // value={status}
                         key={i}
                         onSelect={() => {
                           form.setValue("status", status);
@@ -182,7 +174,8 @@ const EditLeave = ({
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit"disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? "Submitting..." : "Submit"}</Button>
         </form>
       </Form>
     </DialogWrapper>

@@ -12,7 +12,7 @@ export default async function  AdminLeaves()  {
 
   return (
     <Container>
-      <h2 className="text-6xl py-4 font-cormorant font-bold tracking-tight">Leaves</h2>
+      <h2 className="text-6xl py-4 font-cormorant font-bold tracking-tight">Employees Annual Leave Data</h2>
       <TableWrapper title="All Leaves">
         <LeavesTable leaves={allLeaves as Leave[]} />
       </TableWrapper>

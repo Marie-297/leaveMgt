@@ -4,8 +4,8 @@ export const leaveTypes = [
   { label: "Study", value: "STUDY" },
   { label: "Casual", value: "CASUAL" },
   { label: "Maternity", value: "MATERNITY" },
-  { label: "Paternity", value: "PATERNITY" },
-  { label: "Unpaid", value: "UNPAID" },
+  { label: "paternity", value: "PATERNITY" },
+  { label: "unpaid", value: "UNPAID" },
 ] as const
 
 export const orgDepartments = [

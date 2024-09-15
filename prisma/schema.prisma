@@ -68,7 +68,7 @@ model LeaveType {
 
 model Leave {
   id            String      @id @default(cuid())
-  type          LeaveCategory      @default(Casual)
+  type          LeaveCategory
   year          String      @default("")
   startDate     DateTime
   endDate       DateTime
@@ -78,7 +78,7 @@ model Leave {
   userNote      String?
   tasksLink     String?
   userEmail     String
-  status        LeaveStatus
+  status        LeaveStatus @default(PENDING)
   moderator     String?
   moderatorNote String?
   createdAt     DateTime    @default(now())
