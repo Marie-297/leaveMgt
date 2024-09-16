@@ -1,3 +1,4 @@
+"use client"
 import {
   Table,
   TableBody,
@@ -7,18 +8,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Events } from "@prisma/client";
-import { FaRegTrashCan } from "react-icons/fa6";
 import EventForm from "./UserAddEventForm";
+import DeleteButton from "@/components/common/DelBtn";
+import { useState } from "react";
 
 type UserProps = {
-  events: Events[];
+  events: Events[]
 };
 
-const UserEventsTable = ({ events }: UserProps) => {
+const UserEventsTable = ({ events: initialEvents }: UserProps) => {
+  const [events, setEvents] = useState<Events[]>(initialEvents); // Store events in state
 
+  // Function to handle event deletion
+  const handleDelete = (eventId: string) => {
+    setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+  };
+  
   return (
     <div className="  rounded-lg shadow-md px-6  max-h-[50vh] overflow-y-auto bg-white dark:bg-black">
-      <div className="py-5 px-10 sticky top-0 z-10 shadow-md bg-white  dark:bg-slate-900">
+      <div className="py-5 px-10 sticky top-0 z-10 shadow-md bg-white  dark:bg-slate-900 flex justify-between items-center">
           <h2 className="text-2xl text-center font-bold tracking-tight">
            My Event List
           </h2>
@@ -46,9 +54,7 @@ const UserEventsTable = ({ events }: UserProps) => {
               <TableCell>{event.description}</TableCell>
               <TableCell>{event.startDate.toLocaleDateString()}</TableCell>
               <TableCell className="">
-                <button title="del">
-                <FaRegTrashCan size={18}  />
-                </button>
+                <DeleteButton eventId={event.id} onDelete={handleDelete} />
               </TableCell>
             </TableRow>
           ))}
