@@ -15,3 +15,19 @@ export async function getEventsData() {
     throw new Error("Error fetching user info");
   }
 }
+export const getUserEvents = async (userEmail: string) => {
+  const loggedInUser = await getCurrentUser();
+  if (!loggedInUser) return [];
+
+  try {
+    const userEventData = await prisma.events.findMany({
+      where: {
+        userEmail:loggedInUser.email, 
+      },
+    });
+    return userEventData; // Return the filtered events
+  } catch (error) {
+    console.error("Error fetching user events:", error);
+    throw new Error("Error fetching user events");
+  }
+}
