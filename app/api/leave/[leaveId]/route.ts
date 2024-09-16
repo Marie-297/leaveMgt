@@ -38,6 +38,7 @@ export async function PATCH(req: Request) {
           startDate,
           title,
           description,
+          userEmail: email,
         },
       });
     }

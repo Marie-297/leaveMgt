@@ -42,7 +42,7 @@ const EventsTable = ({ events }: UserProps) => {
               <TableCell>{event.description}</TableCell>
               <TableCell>{event.startDate.toLocaleDateString()}</TableCell>
               <TableCell className="">
-                <button>
+                <button title="del">
                 <FaRegTrashCan size={18}  />
                 </button>
               </TableCell>

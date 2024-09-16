@@ -115,7 +115,7 @@ const RequestForm = ({ user }: Props) => {
                       )}
                     >
                       {field.value
-                        ? leaveTypes.find((leave) => leave.value === field.value)?.label
+                        ? leaveTypes.find((leave) => leave.label === field.value)?.label
                         : "Select a leave"}
                       <PiCaretUpDownBold className="ml-2 h-4 w-4" />
                     </Button>
@@ -124,14 +124,14 @@ const RequestForm = ({ user }: Props) => {
                   <DropdownMenuContent className="w-[200px] bg-white/90 backdrop-blur-md border border-transparent shadow-lg rounded-lg p-2 transition-all duration-300">
                     {leaveTypes.map((leave) => (
                       <DropdownMenuItem
-                        key={leave.label}
+                        key={leave.value}
                         onSelect={() => form.setValue("leave", leave.label)}
                         className="flex justify-between mb-2"
                       >
                         <BsCheckLg
                           className={cn(
                             "mr-2 h-4 w-4",
-                            leave.value === field.value ? "opacity-100" : "opacity-0"
+                            leave.label === field.value ? "opacity-100" : "opacity-0"
                           )}
                         />
                         {leave.label}
