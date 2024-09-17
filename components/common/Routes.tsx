@@ -21,7 +21,7 @@ export const AdminRoutes = [
 
 export const UserRoutes = [
   { title: "Dashboard", url: "/dashboard", icon: HiMiniComputerDesktop },
-  { title: "History", url: "/portal/history", icon: TbListCheck },
+  { title: "Leaves", url: "/dashboard/leaves", icon: TbListCheck },
 ];
 
 
