@@ -2,6 +2,7 @@
 
 import { FaRegTrashCan } from "react-icons/fa6";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type DeleteButtonProps = {
   eventId: string;
@@ -10,7 +11,7 @@ type DeleteButtonProps = {
 
 const DeleteButton = ({ eventId, onDelete }: DeleteButtonProps) => {
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const handleDelete = async () => {
     setLoading(true);
     try {
@@ -21,6 +22,7 @@ const DeleteButton = ({ eventId, onDelete }: DeleteButtonProps) => {
       if (res.ok) {
         console.log(`Event with ID: ${eventId} deleted successfully.`); 
         onDelete(eventId);
+        router.refresh();
       } else {
         console.error("Failed to delete event");
       }

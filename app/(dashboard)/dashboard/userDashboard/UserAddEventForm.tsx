@@ -3,8 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { PiCaretUpDownBold } from "react-icons/pi";
-import { BsCheckLg } from "react-icons/bs";
 import { IoCalendarOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,25 +14,30 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { format } from "date-fns";
-import { leaveTypes } from "@/lib/data/dummy-data";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 import DialogWrapper from "@/components/common/Dialog";
-import { User } from "@prisma/client";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import useSWR, { mutate } from "swr";
+import { Events } from "@prisma/client";
+// import { fetcher } from "@/lib/fetcher"; 
 
 // type Props = {
 //   user: User;
 // };
+type EventFormProps = {
+  onEventAdded: (newEvent: Events) => void;
+};
 
-const EventForm = () => {
+const EventForm = ({ onEventAdded }: EventFormProps) => {
   const [open, setOpen] = useState(false);
+  // const [events, setEvents] = useState<EventType[]>([]);
   
   const router = useRouter()
   
@@ -66,7 +69,7 @@ const EventForm = () => {
     try {
       const formattedValues = {
         ...values,
-        startDate: values.startDate.toISOString(),
+        startDate: values.startDate,
       };
 
       const res = await fetch("/api/userEvent", {
@@ -75,10 +78,13 @@ const EventForm = () => {
       });
  
       if (res.ok) {
+        const newEvent = await res.json();
         toast.success("Event Added", { duration: 4000 });
-       form.reset()
-        router.refresh()
-        setOpen(false)
+        setOpen(false);
+        form.reset();
+        router.refresh();
+        onEventAdded(newEvent);
+        // window.location.reload();
       } else {
         const errorMessage = await res.text();
 
@@ -150,7 +156,7 @@ const EventForm = () => {
                         )}
                       >
                         {field.value ? (
-                          format(field.value, "PPP")
+                          format(field.value, "dd, MMM, yyyy")
                         ) : (
                           <span>Pick a date</span>
                         )}

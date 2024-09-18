@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const body: SubmittedEvent = await req.json();
 
     const { title, description, startDate, } = body;
-    await prisma.events.create({
+    const newEvent = await prisma.events.create({
       data: {
         startDate,
         title,
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json({ message: "Success" }, { status: 200 });
+    return NextResponse.json(newEvent, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
