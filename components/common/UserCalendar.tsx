@@ -6,16 +6,18 @@ import { Events } from '@prisma/client';
 import dayjs from 'dayjs';
 import React, { useState } from 'react'
 import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
+import { User } from '@prisma/client';
 import EventPopOver from '@/app/(dashboard)/dashboard/EventPop';
 
 type Props = {
   events: Events[]
+  user: User;
 }
-const UserCalendar = ({events}: Props) => {
+const UserCalendar = ({events, user}: Props) => {
     const currentDate = dayjs()
 
     const [today, setToday] = useState(currentDate)
-    
+    const userEvents = events.filter(event => event.userEmail === user.email);
 
 
   return (
@@ -63,7 +65,7 @@ const UserCalendar = ({events}: Props) => {
        
        <div className="grid grid-cols-7">
          {getDays(today.month(), today.year()).map(({ date, currentMonth, today }, index) => {
-           const event = events?.find(event => dayjs(event.startDate).isSame(date, 'day'));
+           const event = userEvents?.find(event => dayjs(event.startDate).isSame(date, 'day'));
            return (
              <div key={index} className="h-10 grid place-content-center">
               {!event ?

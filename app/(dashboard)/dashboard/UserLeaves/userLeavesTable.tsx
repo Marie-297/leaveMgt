@@ -24,7 +24,7 @@ const UserLeavesTable = async ({ leaves }: leaveProps) => {
   }
 
   return (
-    <Table>
+    <Table id="userPrintTable">
       <TableHeader className="whitespace-nowrap">
         <TableRow>
           <TableHead>Year</TableHead>
@@ -35,8 +35,8 @@ const UserLeavesTable = async ({ leaves }: leaveProps) => {
           <TableHead>Status</TableHead>
           <TableHead>Note</TableHead>
           <TableHead>Updated At</TableHead>
-          {/* <TableHead>Supervisor Notes</TableHead> */}
-          <TableHead>Substitute</TableHead>
+          <TableHead>Supervisor Notes</TableHead>
+          {/* <TableHead>Substitute</TableHead> */}
           <TableHead className="text-right">Authorized By</TableHead>
         </TableRow>
       </TableHeader>

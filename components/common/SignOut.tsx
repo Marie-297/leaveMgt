@@ -10,6 +10,8 @@ const SignOut = () => {
       onClick={(e) => {
         e.preventDefault();
         signOut({ callbackUrl: `/` });
+        console.log("successfully signed out");
+        
       }}
     >
       <BiLogOutCircle />

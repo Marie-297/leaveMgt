@@ -14,6 +14,8 @@ import { getLeaveData } from '@/lib/data/getLeaveData';
 
 const Dashboard = async () => {
   const user = await getCurrentUser();
+  console.log(user);
+  
   const Events = await getEventsData();
   const totalUsers = await prisma.user.count();
   const { pendingCount, approvedCount, rejectedCount } = await getLeaveStatusCounts();
