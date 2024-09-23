@@ -10,6 +10,16 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      profile(profile) {
+        console.log("Google profile:", profile);
+        return {
+          id: profile.sub, // Ensure this is the correct ID from your user model
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: "USER", // or set this based on your logic
+        };
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
@@ -76,15 +86,16 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role; // Add role to the token
+        token.role = user.role;
+        token.id = user.id || token.sub;
       }
       return token;
     },
 
-    // Add the session callback
     async session({ session, token }) {
-      if (session.user) {
-        session.user.role = token.role; // Attach role to session user
+      if (session.user) {        
+        session.user.id = token.sub;
+        session.user.role = token.role; 
       }
       return session;
     },

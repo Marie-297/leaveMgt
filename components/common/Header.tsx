@@ -1,5 +1,5 @@
 
-import { FaBell } from "react-icons/fa6";
+import NotificationBell from "./Notificationbell";
 import { BiSolidChevronDown } from "react-icons/bi";
 import {
   DropdownMenu,
@@ -22,6 +22,7 @@ type HeaderProps = {
 };
 
 const Header = ({user}: HeaderProps) => {
+  
   return (
     <Container>
       <header className=" z-20 bg-white rounded-md shadow-sm dark:bg-black dark:border-b ">
@@ -30,32 +31,26 @@ const Header = ({user}: HeaderProps) => {
             {/* LEFT SIDE */}
             <div className="flex justify-start items-center">
             <Image src="/clock.svg" alt="clock" width={30} height={30} />
-                <span className="text-md dark:text-white font-medium ml-5 font-extrabold">
-                  COMPANY NAME
+                <span className="text-md dark:text-white ml-5 font-extrabold">
+                  EMPLOYEE LEAVE MANAGEMENT SYSTEM
                 </span>
-              {/* <div className="flex items-center space-x-3 md:space-x-6">
-                <img className="h-8 w-8" src={circle} alt="clock" />
-                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                  10:00 AM
-                </span>
-              {" "}
-              {/* <SideBarDrawer user={user} />{" "} */}
             </div>
 
             {/* RIGHT SIDE  */}
 
-            <div className="flex items-center space-x-3 md:space-x-6">
-              <button className="p-2 bg-gray-100 rounded-full text-blue-900">
-                <FaBell size={20} />
-              </button>
-              <Avatar>
-                <AvatarImage src={user?.image as string} alt="Profile" />
-                <AvatarFallback>US</AvatarFallback>
-              </Avatar>
+            <div className="flex items-center space-x-3 md:space-x-6 z-1000 absolute right-2">
+            <NotificationBell userId={user.id} />
+
+            <Avatar>
+              {/* <AvatarImage src={user?.image as string} alt="Profile" /> */}
+              <AvatarFallback className="bg-slate-950 dark:bg-slate-300 text-white font-extrabold dark:text-slate-950">
+                {user?.name ? user.name.split(" ").map((word) => word.charAt(0).toUpperCase()).join(""):"U"}
+              </AvatarFallback>
+            </Avatar>
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className=" text-slate-500 dark:text-slate-300">
+                  <button title="user" className=" text-slate-500 dark:text-slate-300">
                     <BiSolidChevronDown size={20} />
                   </button>
                 </DropdownMenuTrigger>

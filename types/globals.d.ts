@@ -6,6 +6,7 @@ declare module "next-auth/jwt" {
   /** Returned by the `jwt` callback , when using JWT sessions */
   interface JWT {
     role?: Role;
+    id?: string; 
   }
 }
 
@@ -13,6 +14,7 @@ declare module "next-auth" {
   
   interface Session {
     user?: {
+      id?: string;
       role?: Role;
     } & DefaultSession["user"];
   }
@@ -33,6 +35,11 @@ declare module '*.svg' {
   const value: string;
   export default value;
 }
+
+declare module 'nodemailer';
+declare module 'dotenv';
+
+
 
 // https://reacthustle.com/blog/nextjs-setup-role-based-authentication
 // https://authjs.dev/guides/basics/role-based-access-control 

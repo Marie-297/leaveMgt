@@ -1,6 +1,7 @@
 import { getCurrentUser } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { differenceInDays, parseISO } from "date-fns";
+import { LeaveCategory } from "@prisma/client";
 
 type SubmittedLeave = {
   notes: string;
@@ -13,6 +14,9 @@ type SubmittedLeave = {
     name: string;
     role: string;
   };
+  type: LeaveCategory;
+  title: string;
+  description: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -50,11 +54,19 @@ export async function POST(req: NextRequest) {
         startDate,
         endDate,
         userEmail: user.email,
-        type: leave,
+        type: leave as LeaveCategory,
         userNote: notes,
         userName: user.name,
         days: calcDays,
         year,
+      },
+    });
+    await prisma.notification.create({
+      data: {
+        userId: loggedInUser.id, 
+        title: "LEAVE SUBMITTED",
+        content: `Your ${leave as LeaveCategory} Leave has successfully been submitted `, 
+        type: 'LEAVE_REQUEST', 
       },
     });
 

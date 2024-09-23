@@ -8,16 +8,49 @@ import React, { useState } from 'react'
 import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
 import { User } from '@prisma/client';
 import EventPopOver from '@/app/(dashboard)/dashboard/EventPop';
+import { useEffect } from 'react';
+import { NextResponse } from 'next/server';
 
 type Props = {
   events: Events[]
   user: User;
 }
+type Holiday = {
+  date: string; 
+  name: string;
+};
+
 const UserCalendar = ({events, user}: Props) => {
     const currentDate = dayjs()
-
+    const [holidays, setHolidays] = useState<Holiday[]>([]);
     const [today, setToday] = useState(currentDate)
     const userEvents = events.filter(event => event.userEmail === user.email);
+
+    useEffect(() => {
+      const fetchHolidays = async () => {
+        try {
+          const response = await fetch('/api/holiday', {
+            method: 'GET',
+        });
+        console.log('Response status:', response.status);
+        console.log('Response body:', await response.text());
+          if (!response.ok) {
+            throw new Error('Failed to fetch holidays');
+          }
+          const data = await response.json();
+          console.log(data);
+          if (Array.isArray(data) && data.length > 0) {
+            setHolidays(data);
+          } else {
+            console.error('Unexpected data format:', data);
+            setHolidays([]);
+          }
+        } catch (error) {
+          console.error('Error fetching holidays:', error);
+          setHolidays([]); 
+        }
+      }
+    });
 
 
   return (
@@ -66,6 +99,10 @@ const UserCalendar = ({events, user}: Props) => {
        <div className="grid grid-cols-7">
          {getDays(today.month(), today.year()).map(({ date, currentMonth, today }, index) => {
            const event = userEvents?.find(event => dayjs(event.startDate).isSame(date, 'day'));
+           const isHoliday = holidays.some(holiday => dayjs(holiday.date).isSame(date, 'day'));
+           console.log(isHoliday);
+           console.log(`Checking if ${date.format('YYYY-MM-DD')} is a holiday: ${isHoliday}`);
+
            return (
              <div key={index} className="h-10 grid place-content-center">
               {!event ?
@@ -78,7 +115,7 @@ const UserCalendar = ({events, user}: Props) => {
                 >
                   {date.date()}{" "}
                 </h1>
-                : <EventPopOver event={event as Events} date={date.date()} />}
+                : <EventPopOver event={event as Events} date={date.date()} isHoliday={isHoliday} />}
               
              </div>
            );

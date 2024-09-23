@@ -31,7 +31,6 @@ const UserDashboard = async() => {
         </div>
       </div>
       <UserLeaveCards balances={balances as Balances} />
-      <div>Hello User</div>
     </>
   )
 }

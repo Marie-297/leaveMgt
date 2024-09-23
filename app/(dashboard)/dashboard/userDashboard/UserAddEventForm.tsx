@@ -26,18 +26,13 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import useSWR, { mutate } from "swr";
 import { Events } from "@prisma/client";
-// import { fetcher } from "@/lib/fetcher"; 
 
-// type Props = {
-//   user: User;
-// };
 type EventFormProps = {
   onEventAdded: (newEvent: Events) => void;
 };
 
 const EventForm = ({ onEventAdded }: EventFormProps) => {
   const [open, setOpen] = useState(false);
-  // const [events, setEvents] = useState<EventType[]>([]);
   
   const router = useRouter()
   
@@ -94,6 +89,16 @@ const EventForm = ({ onEventAdded }: EventFormProps) => {
       console.error("An error occurred:", error);
       toast.error("An Unexpected error occured");
     }
+    toast("1 new notification!", {
+      position: "top-right",
+      duration: 5000,
+      style: {
+        borderRadius: '8px',
+        background: 'orange',
+        color: 'white',
+        marginLeft: '-80px',
+      },
+    }); 
   }
 
   return (

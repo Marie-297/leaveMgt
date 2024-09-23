@@ -70,9 +70,9 @@ const Title = ({ title, user }: TitleProps) => {
         {/* RIGHT SIDE  */}
 
         <div className="flex items-center space-x-3 md:space-x-6">
-          <Avatar className="w-20 h-20 rounded-full border border-solid  border-gray-300">
+          <Avatar className="w-20 h-20 rounded-full border border-solid  border-gray-300 z-0">
             <AvatarImage src={user?.image || "/default-avatar.png"} alt="Profile Photo" />
-            <AvatarFallback>{user?.name?.[0] || <RxAvatar size = {50} />}</AvatarFallback>
+            <AvatarFallback className="bg-slate-950 text-white font-extrabold border-solid text-2xl">{user?.name?.[0] || <RxAvatar size = {50} />}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
             <span className="font-medium text-lg md:text-xl">
