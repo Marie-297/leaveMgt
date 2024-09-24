@@ -1,3 +1,4 @@
+"use client"
 import {
   Table,
   TableBody,
@@ -8,12 +9,20 @@ import {
 } from "@/components/ui/table";
 import { Events } from "@prisma/client";
 import { FaRegTrashCan } from "react-icons/fa6";
+import DeleteButton from "@/components/common/DelBtn";
+import { useState } from "react";
+import { format } from "date-fns";
 
 type UserProps = {
   events: Events[];
 };
 
-const EventsTable = ({ events }: UserProps) => {
+const EventsTable = ({ events: initialEvents }: UserProps) => {
+  const [events, setEvents] = useState<Events[]>(initialEvents); 
+
+  const handleDelete = (eventId: string) => {
+    setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+  };
 
   return (
     <div className="  rounded-lg shadow-md px-6  max-h-[50vh] overflow-y-auto bg-white dark:bg-black">
@@ -40,11 +49,9 @@ const EventsTable = ({ events }: UserProps) => {
             <TableRow key={event.id}>
               <TableCell className="font-medium">{event.title}</TableCell>
               <TableCell>{event.description}</TableCell>
-              <TableCell>{event.startDate.toLocaleDateString()}</TableCell>
+              <TableCell>{format(new Date(event.startDate), "dd/MM/yyyy")}</TableCell>
               <TableCell className="">
-                <button title="del">
-                <FaRegTrashCan size={18}  />
-                </button>
+                <DeleteButton eventId={event.id} onDelete={handleDelete} />
               </TableCell>
             </TableRow>
           ))}

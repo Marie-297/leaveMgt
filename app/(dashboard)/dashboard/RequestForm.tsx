@@ -27,6 +27,7 @@ import DialogWrapper from "@/components/common/Dialog";
 import { User } from "@prisma/client";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import prisma from "@/lib/prisma";
 
 type Props = {
   user: User;
@@ -85,6 +86,16 @@ const RequestForm = ({ user }: Props) => {
       console.error("An error occurred:", error);
       toast.error("An Unexpected error occured");
     }
+    toast("1 new notification!", {
+      position: "top-right",
+      duration: 5000,
+      style: {
+        borderRadius: '8px',
+        background: 'orange',
+        color: 'white',
+        marginLeft: '-80px',
+      },
+    }); 
   }
 
   return (

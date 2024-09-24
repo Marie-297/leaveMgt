@@ -89,6 +89,11 @@ const PrintOut = ({ leaves }: Props) => {
               Leave Status {sortColumn === "status" && (sortOrder === "asc" ? "▲" : "▼")}
             </DropdownMenuItem>
             <DropdownMenuItem
+              onClick={() => handleSortOptionClick("name", "Name")}
+            >
+              Name {sortColumn === "name" && (sortOrder === "asc" ? "▲" : "▼")}
+            </DropdownMenuItem>
+            <DropdownMenuItem
               onClick={() => handleSortOptionClick("type", "Type")}
             >
               Leave Type {sortColumn === "type" && (sortOrder === "asc" ? "▲" : "▼")}

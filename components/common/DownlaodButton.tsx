@@ -6,10 +6,9 @@ import html2pdf from 'html2pdf.js';
 interface ClientDownloadButtonProps {
   contentId: string;
   leaves: any[];
-  dateRange: { from: Date | undefined; to: Date | undefined }; 
 }
 
-const ClientDownloadButton: React.FC<ClientDownloadButtonProps> = ({ contentId }) => {
+const ClientDownloadButton: React.FC<ClientDownloadButtonProps> = ({ contentId, leaves }) => {
   const handleDownload = () => {
     const element = document.getElementById(contentId);
     if (element) {
@@ -25,9 +24,11 @@ const ClientDownloadButton: React.FC<ClientDownloadButtonProps> = ({ contentId }
   };
 
   return (
-    <Button onClick={handleDownload}>
-      Download
-    </Button>
+    <div className='flex gap-x-5'>
+      <Button onClick={handleDownload}>
+        Download(PDF)
+      </Button>
+    </div>
   );
 };
 

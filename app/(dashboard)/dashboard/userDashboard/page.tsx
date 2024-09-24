@@ -8,15 +8,8 @@ import UserLeaveCards from '@/app/(dashboard)/dashboard/userDashboard/UserLeaveC
 import { getUserBalances } from '@/lib/data/getBalanceData';
 import UserEventsTable from './UserEvent';
 import { getUserEvents } from '@/lib/data/getEventsData';
-// import { Balances, User } from '@prisma/client';
-// import { getUserBalances } from '@/lib/data/getBalanceData';
-// import Container from '@/components/common/Container';
-// import UserBalances from './UserBalances';
 import { getEventsData } from '@/lib/data/getEventsData';
-// import prisma from '@/lib/prisma';
-// import { getLeaveStatusCounts } from '@/lib/data/leaveData';
-
-
+import { format } from 'date-fns';
 
 
 const UserDashboard = async() => {
@@ -34,11 +27,10 @@ const UserDashboard = async() => {
           <UserCalendar user={user as User} events={Events} />
         </div>
         <div className="w-1/2">
-          <UserEventsTable events={events as Events[]} />
+          <UserEventsTable events={events as Events[]} user={user as User} />
         </div>
       </div>
       <UserLeaveCards balances={balances as Balances} />
-      <div>Hello User</div>
     </>
   )
 }

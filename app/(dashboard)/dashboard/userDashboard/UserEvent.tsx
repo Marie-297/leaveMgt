@@ -10,19 +10,26 @@ import {
 import { Events } from "@prisma/client";
 import EventForm from "./UserAddEventForm";
 import DeleteButton from "@/components/common/DelBtn";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { User } from "@prisma/client";
+import { format } from "date-fns";
 
 type UserProps = {
   events: Events[]
+  user: User;
 };
 
-const UserEventsTable = ({ events: initialEvents }: UserProps) => {
-  const [events, setEvents] = useState<Events[]>(initialEvents); // Store events in state
+const UserEventsTable = ({ events: initialEvents, user }: UserProps) => {
+  
+  const [events, setEvents] = useState<Events[]>(initialEvents); 
 
-  // Function to handle event deletion
   const handleDelete = (eventId: string) => {
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
   };
+  const handleEventAdded = useCallback((newEvent: Events) => {
+    console.log("New event added:", newEvent);
+    setEvents((prevEvents) => [...prevEvents, newEvent]);
+  }, []);
   
   return (
     <div className="  rounded-lg shadow-md px-6  max-h-[50vh] overflow-y-auto bg-white dark:bg-black">
@@ -31,7 +38,7 @@ const UserEventsTable = ({ events: initialEvents }: UserProps) => {
            My Event List
           </h2>
           <div>
-            <EventForm />
+            <EventForm onEventAdded={handleEventAdded} />
           </div>
         </div>
 
@@ -48,11 +55,12 @@ const UserEventsTable = ({ events: initialEvents }: UserProps) => {
           </TableRow>
         </TableHeader>
         <TableBody className="whitespace-nowrap">
-          {events.map((event) => (
+          {events.filter((event) => event.userEmail  === user.email).map((event) => (
             <TableRow key={event.id}>
               <TableCell className="font-medium">{event.title}</TableCell>
               <TableCell>{event.description}</TableCell>
-              <TableCell>{event.startDate.toLocaleDateString()}</TableCell>
+              <TableCell>{format(new Date(event.startDate), "dd/MM/yyyy")}
+              </TableCell>
               <TableCell className="">
                 <DeleteButton eventId={event.id} onDelete={handleDelete} />
               </TableCell>
