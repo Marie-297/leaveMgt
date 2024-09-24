@@ -31,7 +31,7 @@ export async function PATCH(req: Request) {
 
     const { notes, status, id, days, type, year, email, user, startDate, createdAt, } = body;
 
-    const updatedAt = format(new Date(), 'yyyy-MM-dd');
+    const updatedAt = new Date().toISOString();
     const moderator = loggedInUser.name;
     const leaveUser = await prisma.user.findUnique({
       where: { email },

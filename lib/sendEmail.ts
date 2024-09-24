@@ -6,7 +6,7 @@ dotenv.config();
 const sendEmail = async ( recipientEmail: string,
   subject: string,
   message: string
-): Promise<void> => { 
+): Promise<string> => { 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -25,8 +25,10 @@ const sendEmail = async ( recipientEmail: string,
   try {
     const info = await transporter.sendMail(mailOptions);
     console.log('Email sent: ' + info.response);
+    return `Email sent successfully to ${recipientEmail}`; 
   } catch (error) {
     console.error('Error sending email:', error);
+    return 'Failed to send email';
   }
 };
 

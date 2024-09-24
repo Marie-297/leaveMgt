@@ -25,7 +25,7 @@ const Header = ({user}: HeaderProps) => {
   
   return (
     <Container>
-      <header className=" z-20 bg-white rounded-md shadow-sm dark:bg-black dark:border-b ">
+      <header className="fixed top-0 w-full z-20 bg-white rounded-md shadow-sm dark:bg-black dark:border-b ">
         <nav className="p-2 transition-all ">
           <div className="flex flex-wrap justify-between items-center mx-8 ">
             {/* LEFT SIDE */}

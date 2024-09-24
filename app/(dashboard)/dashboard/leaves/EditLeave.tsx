@@ -23,6 +23,7 @@ import { leaveStatus } from "@/lib/data/dummy-data";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Leave } from "@prisma/client";
 
 type EditLeaveProps = {
   id: string;
@@ -88,6 +89,7 @@ const EditLeave = ({
         toast.success("Edit Successful", { duration: 4000 });
         setOpen(false);
         router.refresh();
+        toast.custom("An email has been sent to you", { duration: 4000 });
       } else {
         const errorMessage = await res.text();
 
@@ -131,13 +133,14 @@ const EditLeave = ({
                       <PiCaretUpDownBold className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-[200px] p-0">
+                  <DropdownMenuContent className="w-[200px] p-0 border border-gray-300 p-2 rounded-lg">
                     {leaveStatus.map((status, i) => (
                       <DropdownMenuItem
                         key={i}
                         onSelect={() => {
                           form.setValue("status", status);
                         }}
+                        className="flex justify-between bg-white"
                       >
                         <BsCheckLg
                           className={cn(
