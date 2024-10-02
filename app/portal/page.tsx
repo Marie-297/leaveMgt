@@ -33,7 +33,7 @@ const Portal = async () => {
         <h2 className="text-6xl font-cormorant font-bold tracking-tight">Portal</h2>
         <div className="flex items-center space-x-2">
           <MonthDateRangePicker />
-          <ClientDownloadButton contentId="printout-table"  />
+          <ClientDownloadButton contentId="printout-table" leaves={allLeaves as Leave[]}  />
         </div>
       </div>
       <Statistics pendingCount={pendingCount} approvedCount={approvedCount} rejectedCount={rejectedCount} userCount={totalUsers} eventCount={eventsCount} birthdayCount={birthCount}  />

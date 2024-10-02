@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
-  // const apiKey = process.env.API_NINJAS_KEY; 
   const apiKey = '4VNgztGgx/eOny4W1Np+ig==1zeABxkPlk2Oy9LS'
   const url = `https://api.api-ninjas.com/v1/holidays?country=GH&year=2024`;
 
@@ -21,7 +20,11 @@ export async function GET(req: Request) {
     }
     const data = await response.json();
     console.log('Fetched holiday data:', data);
-    return  NextResponse.json(data);
+    const formattedHolidays = data.map((holiday: any) => ({
+      title: holiday.name,
+      start: holiday.date,  
+    }));
+    return  NextResponse.json(formattedHolidays);
   } catch (error) {
     console.error('Error fetching holidays:', error);
     return NextResponse.json({ error: 'Error fetching holidays' }, { status: 500 });

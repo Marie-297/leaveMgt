@@ -10,8 +10,13 @@ type Notification = {
   isRead: boolean;
   createdAt: string;
 };
+interface NotificationListProps {
+  userId: string;
+  onMarkAsRead: (unreadCount: number) => void;
+  setUnreadCount: (count: number) => void;
+}
 
-const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRead: (unreadCount: number) => void; }) => {
+const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRead, setUnreadCount }) => {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +26,11 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
 
   useEffect(() => {
     const fetchNotifications = async () => {
+      if (!userId) {
+        console.error('User ID is undefined or invalid');
+        return; // Exit if userId is invalid
+      }
+
       setIsLoading(true);
       setError(null); 
       try {
@@ -33,7 +43,8 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
         const data = await response.json();
         
         setNotifications(data.notifications);
-        const unread = data.notifications.filter(notification => !notification.isRead).length;
+        const unread = data.notifications.filter((notification: Notification) => !notification.isRead).length;
+        setUnreadCount(unread);
         onMarkAsRead(unread); 
       } catch (error) {
         console.error('Failed to fetch notifications:', error);
@@ -46,8 +57,10 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
     if (userId) {
       fetchNotifications();
     }
-  }, [userId, onMarkAsRead]);
+  }, [userId, onMarkAsRead, setUnreadCount]);
+
   const markAsRead = async (id: string) => {
+    if (!userId) return;
     try {
       const response = await fetch('/api/updateNotification', {
         method: 'PATCH',
@@ -63,14 +76,18 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
 
       const data = await response.json();
       console.log('Updated notification:', data.updatedNotification);
-      
-      // Update the local state to reflect the change
-      setNotifications((prev) =>
-        prev.map((notification) =>
+
+      setNotifications((prev) => {
+        const updatedNotifications = prev.map((notification) =>
           notification.id === id ? { ...notification, isRead: true } : notification
-        )
-      );
-      onMarkAsRead(prevUnreadCount => prevUnreadCount - 1);
+        );
+    
+        const newUnreadCount = updatedNotifications.filter(notification => !notification.isRead).length;
+        setUnreadCount(newUnreadCount);
+        onMarkAsRead(newUnreadCount);
+        return updatedNotifications;
+      });
+      
       setTimeout(() => {
         setNotifications((prev) => prev.filter((notification) => notification.id !== id));
       }, 48 * 60 * 60 * 1000);
@@ -78,6 +95,7 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
       console.error('Error marking notification as read:', error);
     }
   };
+    
   const handleViewClick = (notification: Notification) => {
     setSelectedNotification(notification);
     setModalOpen(true);
@@ -140,7 +158,7 @@ const NotificationList = ({ userId, onMarkAsRead }: { userId: string, onMarkAsRe
     </div>
   );
 };
-const Modal = ({ isOpen, onClose, notification }: { isOpen: boolean; onClose: () => void; notification?: Notification; }) => {
+const Modal = ({ isOpen, onClose, notification }: { isOpen: boolean; onClose: () => void; notification?: Notification | null; }) => {
   if (!isOpen || !notification) return null;
 
   return (
@@ -158,7 +176,7 @@ const Modal = ({ isOpen, onClose, notification }: { isOpen: boolean; onClose: ()
   );
 };
 
-const AllNotificationsModal = ({ notifications }: { notifications: Notification[]; }) => {
+const AllNotificationsModal = ({ isOpen, onClose, notifications }: { isOpen: boolean; onClose: () => void; notifications: Notification[]; }) => {
   const [open, setOpen] = useState(false);
 
   return (

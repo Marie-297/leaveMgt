@@ -22,7 +22,7 @@ const NotificationBell = ({ userId }: { userId: string }) => {
 
     {isClicked && (
       <div className="absolute z-50 right-0 top-10 w-96 bg-white shadow-lg p-4 rounded-lg">
-        <NotificationList userId={userId} onMarkAsRead={setUnreadCount} />
+        <NotificationList userId={userId} onMarkAsRead={setUnreadCount} setUnreadCount={setUnreadCount} />
       </div>
     )}
   </div>

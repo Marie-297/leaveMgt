@@ -13,10 +13,9 @@ import { Events } from "@prisma/client";
 type Props = {
   event: Events;
   date: number;
-  isHoliday: boolean;
 };
 
-export default function EventPopOver({ event, date, isHoliday }: Props) {
+export default function EventPopOver({ event, date }: Props) {
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -24,7 +23,7 @@ export default function EventPopOver({ event, date, isHoliday }: Props) {
           <NavigationMenuTrigger>
             <h1
               className={cn(
-                isHoliday && "bg-red-600 text-white", "bg-slate-200 text-slate-600 border",
+                "bg-slate-200 text-slate-600 border",
                 "h-6 w-6 p-1 grid place-content-center  rounded-full cursor-pointer hover:bg-black hover:text-white dark:hover:bg-slate-500"
               )}
             >

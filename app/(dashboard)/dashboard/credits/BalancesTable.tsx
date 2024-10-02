@@ -74,7 +74,7 @@ const BalancesTable = ({balances}: BalanceProps) => {
   };
 
   return (
-    <TableWrapper title="All User Leave Remaining">
+    <TableWrapper buttonA={""} buttonB={""} title="All User Leave Remaining">
       <Table className="font-bold">
         <TableHeader>
           <TableRow className="font-extrabold ">

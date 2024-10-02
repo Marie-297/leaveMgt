@@ -89,7 +89,7 @@ const EditLeave = ({
         toast.success("Edit Successful", { duration: 4000 });
         setOpen(false);
         router.refresh();
-        toast.custom("An email has been sent to you", { duration: 4000 });
+        toast.custom(`An email has been sent to ${user}`, { duration: 4000 });
       } else {
         const errorMessage = await res.text();
 

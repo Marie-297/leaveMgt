@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import { differenceInDays, parseISO } from "date-fns";
-import { LeaveCategory } from "@prisma/client";
+import { LeaveCategory, Role } from "@prisma/client";
 
 type SubmittedLeave = {
   notes: string;
@@ -61,14 +61,35 @@ export async function POST(req: NextRequest) {
         year,
       },
     });
-    await prisma.notification.create({
-      data: {
-        userId: loggedInUser.id, 
-        title: "LEAVE SUBMITTED",
-        content: `Your ${leave as LeaveCategory} Leave has successfully been submitted `, 
-        type: 'LEAVE_REQUEST', 
+    if (loggedInUser.id) {
+      await prisma.notification.create({
+        data: {
+          userId: loggedInUser.id, 
+          title: "LEAVE SUBMITTED",
+          content: `Your ${leave as LeaveCategory} Leave has successfully been submitted `, 
+          type: 'LEAVE_REQUEST', 
+        },
+      });
+    }
+    const adminUsers = await prisma.user.findMany({
+      where: {
+        role: Role.ADMIN, 
+      },
+      select: {
+        id: true,
       },
     });
+    const adminIds = adminUsers.map(admin => admin.id);
+    await Promise.all(adminIds.map(adminId => 
+        prisma.notification.create({
+        data: {
+          userId: adminId, 
+          title: "LEAVE REQUEST",
+          content: `You received a new Leave Request from ${loggedInUser.name}`, 
+          type: 'LEAVE_REQUEST', 
+        },
+      })
+    ));
 
     return NextResponse.json({ message: "Success" }, { status: 200 });
   } catch (error) {

@@ -10,6 +10,7 @@ const fetchHolidays = async (year: number, countryCode: string) => {
       throw new Error('Failed to fetch holidays');
     }
     const data = await response.json();
+    console.log('Fetched holidays:', data);
     return data.holidays;
   } catch (error) {
     console.error('Error fetching holidays:', error);

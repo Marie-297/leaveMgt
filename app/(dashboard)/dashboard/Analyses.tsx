@@ -28,17 +28,17 @@ const UserBalances = ({ balances, leaveStatus, user }: Props) => {
         />
         <LeaveCard
           year={balances?.year}
-          leaveType={"HEALTH"}
-          credit={balances?.healthCredit as number}
-          used={balances?.healthUsed as number}
-          balance={balances?.healthAvailable as number}
+          leaveType={"SICK"}
+          credit={balances?.sickCredit as number}
+          used={balances?.sickUsed as number}
+          balance={balances?.sickAvailable as number}
         />
         <LeaveCard
           year={balances?.year}
-          leaveType={"FAMILY"}
-          credit={balances?.familyCredit as number}
-          used={balances?.familyUsed as number}
-          balance={balances?.familyAvailable as number}
+          leaveType={"CASUAL"}
+          credit={balances?.casualCredit as number}
+          used={balances?.casualUsed as number}
+          balance={balances?.casualAvailable as number}
         />
         <LeaveCard
           year={balances?.year}
