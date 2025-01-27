@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         startDate,
         title,
         description,
-        userEmail: loggedInUser.email,
+        userEmail: loggedInUser.email || "",
       },
     });
 
