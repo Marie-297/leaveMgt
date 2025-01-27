@@ -22,7 +22,7 @@ export const getUserEvents = async (userEmail: string) => {
   try {
     const userEventData = await prisma.events.findMany({
       where: {
-        userEmail:loggedInUser.email, 
+        userEmail:loggedInUser.email || "", 
       },
     });
     return userEventData; // Return the filtered events
