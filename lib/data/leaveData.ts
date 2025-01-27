@@ -14,7 +14,11 @@ export async function getLeaveStatusCounts() {
     where: { status: 'REJECTED' },
   });
   const userCount = await prisma.user.count({
-    where: { role: "USER" || "ADMIN" || "MODERATOR"}
+    where: { 
+      role: {
+        in: ['USER', 'ADMIN', 'MODERATOR']
+      }
+    }
   })
 
   return {
