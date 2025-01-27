@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
 import EventPopOver from './EventPop';
 import UpcomingEvent from './UpcomingEvent';
+import { FaRegCalendarAlt } from "react-icons/fa";
 
 type Props = {
   events: Events[]
@@ -21,10 +22,15 @@ const Calendar = ({events}: Props) => {
 
   return (
     <Container>
-      <div className='flex'>
-        <div className='w-[70%]'>
+      <div className='flex flex-col lg:flex-row'>
+        <div className='lg:w-[70%] w-full'>
           <div className="flex flex-col sm:flex-row justify-between items-center text-slate-50 bg-slate-950 py-5 px-10 rounded-t-md font-semibold  dark:bg-gray-100 dark:text-slate-950">
-            <h1 className='font-extrabold font-poppins text-3xl'>Calendar</h1>
+            <div className='flex gap-2'>
+              <div className='flex items-center justify-center'>
+                <FaRegCalendarAlt className="w-5 h-5 cursor-pointer hover:scale-105 transition-all" />
+              </div>
+              <h1 className='font-extrabold font-poppins text-3xl'>Calendar</h1>
+            </div>
             <h1 className="select-none">
               {months[today.month()]}, {today.year()}
             </h1>
@@ -69,7 +75,7 @@ const Calendar = ({events}: Props) => {
               {getDays(today.month(), today.year()).map(({ date, currentMonth, today }, index) => {
                 const event = events?.find(event => dayjs(event.startDate).isSame(date, 'day'));
                 return (
-                  <div key={index} className="h-16 grid place-content-start border-x-2 border-t-2">
+                  <div key={index} className="md:h-16 h-12 grid md:place-content-start place-content-center border-x-2 border-t-2">
                     {!event ?
                       <h1 
                         className={cn(
@@ -88,7 +94,7 @@ const Calendar = ({events}: Props) => {
             </div>
           </section>
         </div>
-        <section className='w-[30%]'>
+        <section className='lg:w-[30%] w-full'>
           <UpcomingEvent events={events} />
         </section>
       </div>

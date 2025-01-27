@@ -14,7 +14,7 @@ const UserHistory = async () => {
   return (
     <Container>
       <h2 className="text-6xl font-cormorant font-bold tracking-tight">Dashboard</h2>
-      <TableWrapper title="My Leave History">
+      <TableWrapper title="My Leave History" buttonA={""} buttonB={""}>
         <HistoryTable history={leaveHistory as  Leave[]} />
       </TableWrapper>
     </Container>

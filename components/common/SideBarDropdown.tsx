@@ -45,7 +45,7 @@ const SideBarDrawer = ({ user }: SideBarDrawerProps) => {
         </div>
         <div className="flex items-center justify-around">
           <ToggleLight />
-          <button className=" text-slate-500 dark:text-slate-300">
+          <button title="btn" className=" text-slate-500 dark:text-slate-300">
             <SignOut />
           </button>
         </div>

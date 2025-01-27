@@ -12,11 +12,10 @@ type Notification = {
 };
 interface NotificationListProps {
   userId: string;
-  onMarkAsRead: (unreadCount: number) => void;
   setUnreadCount: (count: number) => void;
 }
 
-const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRead, setUnreadCount }) => {
+const NotificationList: React.FC<NotificationListProps> = ({ userId, setUnreadCount }) => {
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +43,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRea
         
         setNotifications(data.notifications);
         const unread = data.notifications.filter((notification: Notification) => !notification.isRead).length;
-        setUnreadCount(unread);
-        onMarkAsRead(unread); 
+        setUnreadCount(unread); 
       } catch (error) {
         console.error('Failed to fetch notifications:', error);
         setError("Failed to load notifications. Please try again.");
@@ -57,7 +55,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRea
     if (userId) {
       fetchNotifications();
     }
-  }, [userId, onMarkAsRead, setUnreadCount]);
+  }, [userId, setUnreadCount]);
 
   const markAsRead = async (id: string) => {
     if (!userId) return;
@@ -74,9 +72,6 @@ const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRea
         throw new Error('Failed to update notification');
       }
 
-      const data = await response.json();
-      console.log('Updated notification:', data.updatedNotification);
-
       setNotifications((prev) => {
         const updatedNotifications = prev.map((notification) =>
           notification.id === id ? { ...notification, isRead: true } : notification
@@ -84,7 +79,6 @@ const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRea
     
         const newUnreadCount = updatedNotifications.filter(notification => !notification.isRead).length;
         setUnreadCount(newUnreadCount);
-        onMarkAsRead(newUnreadCount);
         return updatedNotifications;
       });
       
@@ -108,9 +102,9 @@ const NotificationList: React.FC<NotificationListProps> = ({ userId, onMarkAsRea
   const closeAllNotificationsModal = () => {
     setAllNotificationsModalOpen(false);
   };
-  const handleViewAllClick = () => {
-    setAllNotificationsModalOpen(true);
-  };
+  // const handleViewAllClick = () => {
+  //   setAllNotificationsModalOpen(true);
+  // };
 
   if (isLoading) {
     return <p>Loading notifications...</p>;

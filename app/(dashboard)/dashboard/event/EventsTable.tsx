@@ -19,9 +19,14 @@ type UserProps = {
 
 const EventsTable = ({ events: initialEvents }: UserProps) => {
   const [events, setEvents] = useState<Events[]>(initialEvents); 
+  const [notifications, setNotifications] = useState<Notification[]>([]); 
 
+  
   const handleDelete = (eventId: string) => {
     setEvents((prevEvents) => prevEvents.filter((event) => event.id !== eventId));
+  };
+  const handleNotificationAdd = (newNotification: Notification) => {
+    setNotifications((prev) => [...prev, newNotification]);
   };
 
   return (
@@ -51,7 +56,7 @@ const EventsTable = ({ events: initialEvents }: UserProps) => {
               <TableCell>{event.description}</TableCell>
               <TableCell>{format(new Date(event.startDate), "dd/MM/yyyy")}</TableCell>
               <TableCell className="">
-                <DeleteButton eventId={event.id} onDelete={handleDelete} />
+                <DeleteButton eventId={event.id} onDelete={handleDelete} onNotificationAdd={handleNotificationAdd} />
               </TableCell>
             </TableRow>
           ))}

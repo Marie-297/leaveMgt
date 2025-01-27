@@ -1,3 +1,4 @@
+"use client"
 import * as React from "react";
 import Image from "next/image";
 import { AdminRoutes, ModeratorRoutes, UserRoutes } from "./Routes";
@@ -5,12 +6,15 @@ import { RenderRoutes } from "./RenderRoutes";
 import ToggleLight from "./ToggleLight";
 import { User } from "@prisma/client";
 import SignOut from "./SignOut";
+import { useState } from "react";
+import { FaBars } from "react-icons/fa";
 
 type SideBarProps = {
   user: User;
 };
 
 const SideBar = ({ user }: SideBarProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const adminIconsRouter = () => {
     return <>{RenderRoutes({ routes: AdminRoutes })}</>;
   };
@@ -23,14 +27,20 @@ const SideBar = ({ user }: SideBarProps) => {
     return <>{RenderRoutes({ routes: ModeratorRoutes })}</>;
   };
   return (
-    <div className="fixed  bottom-0 top-14 left-0 sm:block w-[12rem] dark:border-r">
+    <>
+      <button
+        className="sm:hidden fixed top-8 left-4 z-50 p-2 text-slate-950 dark:text-white"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle Sidebar"
+      >
+        <FaBars size={30} />
+      </button>
+      <div className={`fixed top-14 bottom-0 left-0 z-40 bg-white dark:bg-black dark:border-r shadow-lg transform ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0 transition-transform duration-300 w-[12rem]`}>
       <div className="flex flex-col items-start justify-between h-full">
         {/* TOP PART  */}
         <div>
-          <div className="my-8">
-            <h1></h1>
-          </div>
-
           <nav className="flex flex-col items-start px-8 mx-0 overflow-y-auto dark:text-white">
             {user?.role === "ADMIN" && adminIconsRouter()}
             {user?.role === "USER" && userIconsRouter()}
@@ -49,6 +59,8 @@ const SideBar = ({ user }: SideBarProps) => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 

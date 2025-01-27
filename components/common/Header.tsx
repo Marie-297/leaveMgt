@@ -16,6 +16,7 @@ import Image from "next/image";
 import ToggleLight from "./ToggleLight";
 import { User } from "@prisma/client";
 import SignOut from "./SignOut";
+import Link from "next/link";
 
 type HeaderProps = {
   user: User;
@@ -26,14 +27,14 @@ const Header = ({user}: HeaderProps) => {
   return (
     <Container>
       <header className="fixed top-0 w-full z-20 bg-white rounded-md shadow-sm dark:bg-black dark:border-b ">
-        <nav className="p-2 transition-all ">
-          <div className="flex flex-wrap justify-between items-center mx-8 ">
+        <nav className="lg:p-2 p-1 md:p-2 transition-all ">
+          <div className="flex flex-wrap justify-between items-center lg:mx-8 md:mx-6 mx-2">
             {/* LEFT SIDE */}
             <div className="flex justify-start items-center">
-            <Image src="/clock.svg" alt="clock" width={30} height={30} />
-                <span className="text-md dark:text-white ml-5 font-extrabold">
-                  EMPLOYEE LEAVE MANAGEMENT SYSTEM
-                </span>
+              <Image src="/clock.svg" alt="clock" width={30} height={30} className="sm:flex hidden" />
+              <span className="md:text-lg text-xs dark:text-white ml-5 lg:font-extrabold font-bold">
+                EMPLOYEE LEAVE MANAGEMENT SYSTEM
+              </span>
             </div>
 
             {/* RIGHT SIDE  */}
@@ -41,8 +42,7 @@ const Header = ({user}: HeaderProps) => {
             <div className="flex items-center space-x-3 md:space-x-6 z-1000 absolute right-2">
             <NotificationBell userId={user.id} />
 
-            <Avatar>
-              {/* <AvatarImage src={user?.image as string} alt="Profile" /> */}
+            <Avatar className="hidden sm:flex">
               <AvatarFallback className="bg-slate-950 dark:bg-slate-300 text-white font-extrabold dark:text-slate-950">
                 {user?.name ? user.name.split(" ").map((word) => word.charAt(0).toUpperCase()).join(""):"U"}
               </AvatarFallback>
@@ -57,8 +57,12 @@ const Header = ({user}: HeaderProps) => {
                 <DropdownMenuContent className="w-54">
                   <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/Profile">Profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href="/Support">Support</Link>
+                  </DropdownMenuItem>
 
                   <div className="flex flex-col items-center space-y-6 ">
                     <SignOut />

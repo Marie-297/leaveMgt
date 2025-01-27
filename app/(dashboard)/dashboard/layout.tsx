@@ -19,7 +19,7 @@ export default async function DashLayout({
         <div className="sm:ml-[6rem] " > 
           <SideBar user={user as User} />
          
-          <div className="pl-[8rem] pr-[2rem]">
+          <div className="lg:pl-[8rem] sm:pl-[4rem] pr-[2rem] md:pl-[8rem]">
             {children}
           </div>
         </div>

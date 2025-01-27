@@ -18,13 +18,13 @@ export async function POST(req: NextRequest) {
   try {
     const body: SubmittedEvent = await req.json();
 
-    const { title, description, startDate, } = body;
+    const { title, description, startDate } = body;
     const newEvent = await prisma.events.create({
       data: {
         startDate,
         title,
         description,
-        userEmail: loggedInUser.email,
+        userEmail: loggedInUser.email!,
       },
     });
     await prisma.notification.create({
@@ -33,6 +33,12 @@ export async function POST(req: NextRequest) {
         title: `Event: ${title}`,
         content: description, 
         type: 'EVENT', 
+      },
+    });
+    await prisma.user.update({
+      where: { id: loggedInUser.id },
+      data: {
+        unreadCount: { increment: 1 },
       },
     });
 

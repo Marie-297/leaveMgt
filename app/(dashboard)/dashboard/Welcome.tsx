@@ -13,7 +13,7 @@ const WelcomeBanner = ({ user }: Props) => {
       <div className="flex flex-wrap justify-between items-center my-6 ">
         {/* LEFT SIDE */}
         <div className="flex justify-start items-center">
-          <h2 className="text-xl font-extrabold leading-tight  lg:text-2xl">
+          <h2 className="text-2xl font-extrabold leading-tight  lg:text-2xl">
             Welcome {user.name} 🤝!
           </h2>
         </div>

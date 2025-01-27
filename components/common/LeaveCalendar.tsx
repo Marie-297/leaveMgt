@@ -6,8 +6,8 @@ import { Events } from '@prisma/client';
 import dayjs from 'dayjs';
 import React, { useState } from 'react'
 import { IoMdArrowDropleft, IoMdArrowDropright } from 'react-icons/io';
-import EventPopOver from './EventPop';
-import UpcomingEvent from './UpcomingEvent';
+import EventPopOver from '@/app/(dashboard)/dashboard/EventPop';
+import UpcomingEvent from '@/app/(dashboard)/dashboard/UpcomingEvent';
 
 type Props = {
   events: Events[]

@@ -11,7 +11,7 @@ export default async function AdminBalances  ()  {
   }
   return (
     <Container>
-      <h2 className="text-6xl py-4 font-cormorant font-extrabold tracking-tight">Employees Leave Credits Analytics</h2>
+      <h2 className="lg:text-6xl text-4xl py-4 font-cormorant font-extrabold tracking-tight">Employees Leave Credits Analytics</h2>
       <BalancesTable balances={allBalances as Balances[]}/>
     </Container>
   )

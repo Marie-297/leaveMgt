@@ -14,7 +14,7 @@ const font = Poppins({
 
 const Authentication = () => {
 	return (
-		<div className='min-h-screen flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800 sky'>
+		<div className='w-full lg:min-h-screen h-2/3 flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800 sky'>
 			<div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]'>
 				<div className='flex flex-col space-y-2 text-center'>
 					<h1

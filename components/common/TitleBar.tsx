@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import SearchInput from "../other/SearchInput";
 import { useRouter } from "next/navigation";
+import SideBarDrawer from "./SideBarDropdown";
 
 type TitleProps = {
   title: string;
@@ -69,7 +70,7 @@ const Title = ({ title, user }: TitleProps) => {
 
         {/* RIGHT SIDE  */}
 
-        <div className="flex items-center space-x-3 md:space-x-6">
+        <div className="md:flex items-center space-x-3 md:space-x-6 sm:flex hidden">
           <Avatar className="w-20 h-20 rounded-full border border-solid  border-gray-300 z-0">
             <AvatarImage src={user?.image || "/default-avatar.png"} alt="Profile Photo" />
             <AvatarFallback className="bg-slate-950 text-white font-extrabold border-solid text-2xl">{user?.name?.[0] || <RxAvatar size = {50} />}</AvatarFallback>

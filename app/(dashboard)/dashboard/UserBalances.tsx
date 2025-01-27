@@ -18,7 +18,7 @@ type Props = {
 
 const UserBalances = ({ user, leaves={ pending: [], approved: [], rejected: [] }, pendingCount, approvedCount, rejectedCount }: Props) => {
   const renderLeaveDetails = (leaveList: Leave[]) => {
-    // if (leaveList.length === 0) return "No leave records";
+    if (leaveList.length === 0) return "No leave records";
 
     return (
       <div>
@@ -35,7 +35,7 @@ const UserBalances = ({ user, leaves={ pending: [], approved: [], rejected: [] }
   };
   return (
     <Container>
-      <section className="grid grid-cols-1 gap-4 my-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+      <section className="grid grid-cols-1 gap-4 my-10 md:grid-cols-2 lg:grid-cols-3 pb-10">
         <LeaveCard
            title="Pending Leave(s)"
            subtitle="Total Leaves Pending"
