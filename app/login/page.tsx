@@ -11,7 +11,7 @@ export default function Home() {
           <h1 className="font-bold text-wrap text-4xl font-poppins text-white">Leave Management System</h1>
           <small className="font-montserrat italic font-extrabold text-xl">Your Leave, Your Way – Seamless and Stress-Free.</small>
         </div>
-        <Image src={animation} alt="Scan person" className="h-1/2 object-cover w-full p-2" />
+        <Image src={animation} alt="Scan person" className="h-1/2 object-cover w-full p-2" unoptimized />
       </div>
       <Authentication />
     </main>
