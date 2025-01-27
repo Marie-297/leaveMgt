@@ -1,10 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { userId, title, content, type } = req.body;
-
+// POST handler for creating notifications
+export async function POST(req: Request) {
   try {
+    // Parse the request body
+    const { userId, title, content, type } = await req.json();
+
+    // Create a new notification in the database
     const notification = await prisma.notification.create({
       data: {
         userId,
@@ -13,7 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         type,
       },
     });
-    await prisma.user.update({
+
+    // Update the user's unread count
+    const updatedUser = await prisma.user.update({
       where: { id: userId },
       data: {
         unreadCount: {
@@ -22,8 +27,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
       select: { unreadCount: true },
     });
-    res.status(201).json({ notification });
+
+    // Return a success response
+    return NextResponse.json({ notification, unreadCount: updatedUser.unreadCount }, { status: 201 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create notification' });
+    console.error('Error creating notification:', error);
+    return NextResponse.json({ error: 'Failed to create notification' }, { status: 500 });
   }
 }
