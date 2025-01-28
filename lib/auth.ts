@@ -22,6 +22,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  debug: true,
   secret: process.env.NEXTAUTH_SECRET as string,
   pages: {
     signIn: "/login",
