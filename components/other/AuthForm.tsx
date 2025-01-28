@@ -26,8 +26,14 @@ export function AuthForm() {
 			alert('Please select a role before continuing');
 			return;
 		}
+
+		const callbackUrl =
+    process.env.NODE_ENV === 'production'
+      ? `https://leave-mgt-nine.vercel.app//dashboard?role=${selectedRole}`
+      : `http://localhost:3000/dashboard?role=${selectedRole}`;
+
 		signIn(providerId, {
-			callbackUrl: `/dashboard?role=${selectedRole}`,
+			callbackUrl
 		}).catch((error) => {
 			console.error('Sign-in error:', error);
 			alert('Sign-in failed: You cannot be signed in with this role');
