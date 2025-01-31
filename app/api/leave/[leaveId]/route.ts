@@ -5,6 +5,7 @@ import { LeaveStatus } from "@prisma/client";
 import { NextResponse } from "next/server";
 import sendEmail from "@/lib/sendEmail";
 import { format } from "date-fns";
+import { prisma } from "@/lib/prisma";
 
 type EditBody = {
   notes: string;

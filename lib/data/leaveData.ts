@@ -1,5 +1,5 @@
 // lib/data/leaveData.ts
-import prisma from '@/lib/prisma';
+import {prisma} from '@/lib/prisma';
 
 export async function getLeaveStatusCounts() {
   const pendingCount = await prisma.leave.count({

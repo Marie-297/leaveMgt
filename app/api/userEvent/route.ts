@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 import { User } from "@prisma/client";
 
 type SubmittedEvent = {

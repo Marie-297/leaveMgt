@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/lib/session";
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { differenceInDays, parseISO } from "date-fns";
 import { LeaveCategory, Role } from "@prisma/client";

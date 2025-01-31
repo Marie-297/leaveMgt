@@ -23,17 +23,22 @@ const ToggleLight = () => {
         <div className="flex">
           <button
           onClick={() => setTheme("light")}
-          className="p-1 ml-2 bg-slate-600 text-white rounded-full "
+          className="p-1 ml-2 bg-slate-600 text-white rounded-full 
+          "
+          title="button"
         >
             <HiOutlineSun size={20} />
           </button>
-          <p className="text-white-950 ml-4 font font-extrabold">Light Mode</p>
+          <p className="text-white-950 ml-4 font font-extrabold"
+          title="button">Light Mode</p>
           </div>
       ) : (
         <div className="flex">
           <button
             onClick={() => setTheme("dark")}
-            className="p-1 bg-blue-950 text-white rounded-full "
+            className="p-1 bg-blue-950 text-white rounded-full 
+            "
+            title="button"
           >
             <MdOutlineNightlightRound size={20} />
           </button>

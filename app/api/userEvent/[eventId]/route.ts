@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import {prisma} from '@/lib/prisma';
 import { getCurrentUser } from '@/lib/session';
 
 export async function DELETE(req: NextRequest, { params }: { params: { eventId: string } }) {

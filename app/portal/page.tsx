@@ -4,7 +4,7 @@ import { MonthDateRangePicker } from "@/app/(dashboard)/dashboard/MonthDateRange
 import { Button } from "@/components/ui/button"
 import { getLeaveData } from "@/lib/data/getLeaveData"
 import Statistics from "./Statistic"
-import prisma from "@/lib/prisma"
+import {prisma} from "@/lib/prisma"
 import { getEventsData } from "@/lib/data/getEventsData"
 import { getLeaveStatusCounts } from "@/lib/data/leaveData"
 import PrintOut from "./PrintOut"

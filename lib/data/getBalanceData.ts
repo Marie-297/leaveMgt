@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/session";
-import prisma from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 
 export async function getUserBalances() {
   const loggedInUser = await getCurrentUser();
