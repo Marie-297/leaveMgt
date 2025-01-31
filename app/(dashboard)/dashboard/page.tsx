@@ -7,7 +7,7 @@ import { Balances, LeaveCategory, User } from '@prisma/client';
 import Container from '@/components/common/Container';
 import UserBalances from './UserBalances';
 import { getEventsData } from '@/lib/data/getEventsData';
-import prisma from '@/lib/prisma';
+import {prisma} from '@/lib/prisma';
 import { getLeaveStatusCounts } from '@/lib/data/leaveData';
 import UserDashboard from './userDashboard/page';
 import { getLeaveData } from '@/lib/data/getLeaveData';
