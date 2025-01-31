@@ -27,7 +27,7 @@ import DialogWrapper from "@/components/common/Dialog";
 import { User } from "@prisma/client";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import prisma from "@/lib/prisma";
+import {prisma} from "@/lib/prisma";
 
 type Props = {
   user: User;
