@@ -1,7 +1,7 @@
 // pages/events.tsx
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
-import prisma from "@/lib/prisma"; // Adjust this path to your prisma setup
+import { prisma } from "@/lib/prisma"; // Adjust this path to your prisma setup
 import UserEventsTable from "./UserEvent";
 import { Events, User } from "@prisma/client";
 import { getCurrentUser } from "@/lib/session";
