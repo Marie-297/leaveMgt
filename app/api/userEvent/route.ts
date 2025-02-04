@@ -1,7 +1,6 @@
 import { getCurrentUser } from "@/lib/session";
 import { NextRequest, NextResponse } from "next/server";
 import {prisma} from "@/lib/prisma";
-import { User } from "@prisma/client";
 
 type SubmittedEvent = {
   title: string;
@@ -16,6 +15,13 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const today = new Date();
+    await prisma.events.deleteMany({
+      where: {
+        startDate: { lt: today },
+        userEmail: loggedInUser.email!,
+      },
+    })
     const body: SubmittedEvent = await req.json();
 
     const { title, description, startDate } = body;
